@@ -1,0 +1,23 @@
+name:                calc
+version:             0.1.0.0
+synopsis:            A powerful calc implemented in Haskell.
+description:         A powerful calc implemented in Haskell.
+homepage:            https://github.com/qiuhw/calc
+license:             BSD3
+license-file:        LICENSE
+author:              Hongwen Qiu
+maintainer:          qiuhongwen@coordem.com
+copyright:           2013 Hongwen Qiu
+category:            Math
+build-type:          Simple
+cabal-version:       >=1.8
+
+executable calc
+  main-is:           calc.hs
+  other-modules:     Calc.SyntaxTree
+                     Calc.Parser
+  hs-source-dirs:    src
+  build-depends:     base ==4.6.*,
+                     containers ==0.5.*,
+                     mtl ==2.1.*,
+                     parsec ==3.1.*
