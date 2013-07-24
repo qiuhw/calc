@@ -51,23 +51,29 @@ evalExpr e@(ID name)  = do
         Nothing  -> return e
         Just exp -> evalExpr exp
 
-evalExpr (Negative (Val i)) = return . Val $ -i
-evalExpr (Negative e)       = liftM Negative $ evalExpr e
+evalExpr (Negative e) = liftM neg $ evalExpr e
+  where neg (Val i) = Val $ -i
+        neg e       = Negative e
 
-evalExpr (Pow (Val i) (Val j)) = return . Val $ i^j
-evalExpr (Pow e1 e2)           = liftM2 Pow (evalExpr e1) (evalExpr e2)
+evalExpr (Pow e1 e2) = liftM2 pow (evalExpr e1) (evalExpr e2)
+  where pow (Val i) (Val j) = Val $ i^j
+        pow e1 e2           = Pow e1 e2
 
-evalExpr (Mul (Val i) (Val j)) = return . Val $ i*j
-evalExpr (Mul e1 e2)           = liftM2 Mul (evalExpr e1) (evalExpr e2)
+evalExpr (Mul e1 e2) = liftM2 mul (evalExpr e1) (evalExpr e2)
+  where mul (Val i) (Val j) = Val $ i*j
+        mul e1 e2           = Mul e1 e2
 
-evalExpr (Div (Val i) (Val j)) = return . Val $ i `div` j
-evalExpr (Div e1 e2)           = liftM2 Div (evalExpr e1) (evalExpr e2)
+evalExpr (Div e1 e2) = liftM2 iDiv (evalExpr e1) (evalExpr e2)
+  where iDiv (Val i) (Val j) = Val $ i `div` j
+        iDiv e1 e2           = Div e1 e2
 
-evalExpr (Add (Val i) (Val j)) = return . Val $ i+j
-evalExpr (Add e1 e2)           = liftM2 Add (evalExpr e1) (evalExpr e2)
+evalExpr (Add e1 e2) = liftM2 add (evalExpr e1) (evalExpr e2)
+  where add (Val i) (Val j) = Val $ i+j
+        add e1 e2           = Add e1 e2
 
-evalExpr (Sub (Val i) (Val j)) = return . Val $ i-j
-evalExpr (Sub e1 e2)           = liftM2 Sub (evalExpr e1) (evalExpr e2)
+evalExpr (Sub e1 e2) = liftM2 sub (evalExpr e1) (evalExpr e2)
+  where sub (Val i) (Val j) = Val $ i-j
+        sub e1 e2           = Sub e1 e2
 
 evalExpr (Bind name e) = do
     expr <- evalExpr e
