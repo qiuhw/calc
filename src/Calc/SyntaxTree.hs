@@ -29,10 +29,10 @@ instance Show Expr where
     show (ID s)       = s
     show (Negative e) = '-' : parens e
     show (Pow e1 e2)  = parens e1 ++ "^" ++ parens e2
-    show (Mul e1 e2)  = parens e1 ++ "." ++ parens e2
+    show (Mul e1 e2)  = parens e1 ++ "*" ++ parens e2
     show (Div e1 e2)  = parens e1 ++ "/" ++ parens e2
-    show (Add e1 e2)  = parens e1 ++ "+" ++ parens e2
-    show (Sub e1 e2)  = parens e1 ++ "-" ++ parens e2
+    show (Add e1 e2)  = parens e1 ++ " + " ++ parens e2
+    show (Sub e1 e2)  = parens e1 ++ " - " ++ parens e2
     show (Bind s e)   = s ++ "=" ++ show e
 
 parens Nil            = ""
